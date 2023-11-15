@@ -1,7 +1,7 @@
 import IBoardItem from "../models/IBoardItem";
 import IProgress from "../models/IProgress";
 import ITask from "../models/ITask";
-import { getValue } from "./localStorage";
+import { getValue, storeValue } from "./localStorage";
 
 export const storeKeys = {
   ITEM_BOARD: "item_board",
@@ -69,4 +69,21 @@ export async function getProgress(): Promise<IProgress[]> {
   }
 
   return JSON.parse(rawValue) as IProgress[];
+}
+
+export async function addBoardItem(item: IBoardItem): Promise<void> {
+  const currentBoard = await getItemBoard();
+  const newBoard = [...currentBoard, item];
+
+  await storeValue(storeKeys.ITEM_BOARD, JSON.stringify(newBoard));
+}
+
+export async function updateProgress(progress: IProgress): Promise<void> {
+  const currentProgressItems = await getProgress();
+  let newProgressItems = currentProgressItems.filter(
+    (x) => x.itemId !== progress.itemId
+  );
+  newProgressItems.push(progress);
+
+  await storeValue(storeKeys.PROGRESS, JSON.stringify(newProgressItems));
 }
