@@ -25,12 +25,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "9b1c500f-46ef-47b1-9b81-8dc2b24c5269"
-      }
-    },
-    "owner": "andrewhollis129"
+    }
   }
 }
